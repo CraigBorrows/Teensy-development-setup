@@ -5,6 +5,27 @@ This repository provides a complete development environment for Teensy microcont
 The setup streamlines the build process by leveraging Docker for cross-platform compilation while maintaining the convenience of CLion's integrated development environment.
 This configuration includes automated build tools, integrated Teensy loader functionality, and serial monitoring capabilities for efficient embedded development workflow.
 
+## Requirements
+### Software
+
+* Windows 10/11 - Host operating system
+* CLion IDE - JetBrains C/C++ IDE with CMake support
+* Docker Desktop - For containerized build environment
+* Python 3.x - For serial monitoring utilities
+
+### Hardware
+
+* Teensy 4.1 microcontroller board
+* USB cable - For programming and serial communication
+
+### Prerequisites
+
+* Docker Desktop installed and running
+* CLion with valid license or evaluation version
+* Basic familiarity with CMake and embedded development
+
+
+
 ## Rename Project
 * CMakeList.txt
 * Line 11 -> project(teensy-project C CXX ASM)
