@@ -43,7 +43,7 @@ docker build -t teensy-dev .
 * New Tool, Name "teensy loader"
 ```
 * Program: $ProjectFileDir$\utils\teensy_loader_cli.exe
-* Arguments: --mcu=TEENSY41 -v -w $CMakeCurrentLocalBuildDir$/$ProjectName$.hex
+* Arguments: --mcu=TEENSY41 -v -w "$CMakeCurrentLocalGenerationDir$\$ProjectName$.hex"
 * Working directory: $ProjectFileDir$
 ```
 ![img_1.png](utils/external_tools.png)
