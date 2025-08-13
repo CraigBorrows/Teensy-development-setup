@@ -28,10 +28,14 @@ RUN mkdir -p arduino-1.8.19/hardware/teensy/avr && \
     mv cores-master/* . && \
     rm -rf cores-master master.zip
 
-# Create basic libraries directory structure
+# Create empty libraries directory (CLion expects it to exist)
 RUN mkdir -p arduino-1.8.19/hardware/teensy/avr/libraries
 
-# Set environment variables to match actual structure
+# Verify the structure
+RUN echo "=== Teensy4 headers ===" && \
+    ls -la /opt/teensy/arduino-1.8.19/hardware/teensy/avr/teensy4/*.h | head -10
+
+# Set environment variables
 ENV TEENSY_ROOT=/opt/teensy/arduino-1.8.19/hardware/teensy/avr
 ENV ARDUINO_ROOT=/opt/teensy/arduino-1.8.19
 

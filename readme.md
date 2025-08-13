@@ -1,0 +1,57 @@
+# Teensy development setup
+using windows, clion and docker
+
+## Rename Project
+* CMakeList.txt
+* Line 11 -> project(teensy-project C CXX ASM)
+* Rename teensy-project to the name of the project
+
+## Build Docker
+* Terminal in clion
+* New windows powershell
+```commandline
+docker build -t teensy-dev .
+```
+
+## Teensy loader
+* Settings -> Tools -> External Tools
+* New Tool, Name "teensy loader"
+```
+* Program: $ProjectFileDir$\utils\teensy_loader_cli.exe
+* Arguments: --mcu=TEENSY41 -v -w $CMakeCurrentLocalBuildDir$/$ProjectName$.hex
+* Working directory: $ProjectFileDir$
+```
+![img_1.png](utils/external_tools.png)
+
+## Setup tool chain
+* Settings -> Build, Execution, Deployment -> Toolchains
+* New Docker
+* Select teensy-dev:latest
+* Rename Teensy
+
+![img.png](utils/toolchains.png)
+
+
+## Profile config
+* Settings -> Build, Execution, Deployment -> CMake
+* New 
+```
+* Name: Teensy
+* Build type: Release 
+* Toolchain: Teensy
+```
+![img_4.png](utils/Cmake.png)
+
+## Configuration
+* Cmake application
+```
+* Target: Teensy-project.elf
+* Executable: $ProjectFileDir$\utils\work_complete
+* Before Launch
+  * Build
+  * External Tool "teensy loader"
+```
+
+
+![img_3.png](utils/configuration.png)
+
