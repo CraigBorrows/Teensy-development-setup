@@ -52,6 +52,12 @@ docker build -t teensy-dev .
   * External Tool "teensy loader"
 ```
 
-
 ![img_3.png](utils/configuration.png)
+
+## Serial Monitor
+* Clion terminal
+* New PowerShell
+* pip install pyserial
+* python .\utils\serial_monitor.py 
+ 
 
