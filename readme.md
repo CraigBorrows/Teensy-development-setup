@@ -1,6 +1,10 @@
 # Teensy development setup
 using windows, clion and docker
 
+This repository provides a complete development environment for Teensy microcontroller projects using Windows, CLion IDE, and Docker containerization. 
+The setup streamlines the build process by leveraging Docker for cross-platform compilation while maintaining the convenience of CLion's integrated development environment.
+This configuration includes automated build tools, integrated Teensy loader functionality, and serial monitoring capabilities for efficient embedded development workflow.
+
 ## Rename Project
 * CMakeList.txt
 * Line 11 -> project(teensy-project C CXX ASM)
@@ -8,8 +12,8 @@ using windows, clion and docker
 
 ## Build Docker
 * Terminal in clion
-* New windows powershell
-```commandline
+* New windows PowerShell
+```
 docker build -t teensy-dev .
 ```
 
