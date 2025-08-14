@@ -16,6 +16,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(TEENSY_ROOT $ENV{TEENSY_ROOT})
+set(ARDUINO_ROOT $ENV{ARDUINO_ROOT})
 
 if(NOT TEENSY_ROOT)
     message(FATAL_ERROR "TEENSY_ROOT environment variable not set")
@@ -28,6 +29,7 @@ file(GLOB TEENSY_C_SOURCES "${TEENSY_ROOT}/teensy4/*.c")
 file(GLOB TEENSY_CPP_SOURCES "${TEENSY_ROOT}/teensy4/*.cpp")
 file(GLOB TEENSY_ASM_SOURCES "${TEENSY_ROOT}/teensy4/*.S")
 
+
 # Your source files
 set(PROJECT_SOURCES src/main.cpp)
 
@@ -37,21 +39,18 @@ add_executable(${PROJECT_NAME}.elf
         ${TEENSY_C_SOURCES}
         ${TEENSY_CPP_SOURCES}
         ${TEENSY_ASM_SOURCES}
+        ${ARDUINO_ROOT}/hardware/arduino/avr/libraries/SPI/src/SPI.cpp # SPI
+        ${ARDUINO_ROOT}/hardware/arduino/avr/libraries/Wire/src/Wire.cpp # I2C
 )
 
 # More comprehensive include directories
 target_include_directories(${PROJECT_NAME}.elf PRIVATE
         ${TEENSY_ROOT}/teensy4
-        ${TEENSY_ROOT}/libraries
-        ${TEENSY_ROOT}/cores/teensy4
+        ${ARDUINO_ROOT}/hardware/arduino/avr/libraries/SPI/src # SPI
+        ${ARDUINO_ROOT}/hardware/arduino/avr/libraries/Wire/src # I2C
         src
 )
 
-# Also add system include directories for IDE
-target_include_directories(${PROJECT_NAME}.elf SYSTEM PRIVATE
-        ${TEENSY_ROOT}/teensy4
-        ${TEENSY_ROOT}/libraries
-)
 
 # Teensy 4.x definitions
 target_compile_definitions(${PROJECT_NAME}.elf PRIVATE
