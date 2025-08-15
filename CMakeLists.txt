@@ -5,19 +5,14 @@ set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/teensy-toolchain.cmake)
 project(teensy-project C CXX ASM)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-include(utils/TeensyUtils.cmake)
 
 # Set C++17 standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(TEENSY_ROOT $ENV{TEENSY_ROOT})
-
-
-if(NOT TEENSY_ROOT)
-    message(FATAL_ERROR "TEENSY_ROOT environment variable not set")
-endif()
-
+include(utils/TeensyUtils.cmake)
+list_teensy_libraries()
+list_project_libraries()
 
 # Your source files
 set(PROJECT_SOURCES src/main.cpp)
@@ -28,7 +23,6 @@ add_executable(${PROJECT_NAME}
 )
 
 add_teensy_cores(${PROJECT_NAME} teensy4)
-
 add_teensy_library(${PROJECT_NAME} SPI)
 add_teensy_library(${PROJECT_NAME} Wire)
 
@@ -46,7 +40,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 
 # CRITICAL: Add linker script and options
 target_link_options(${PROJECT_NAME} PRIVATE
-        -T${TEENSY_ROOT}/teensy4/imxrt1062_t41.ld
+        -T${TEENSY_ROOT}/cores/teensy4/imxrt1062_t41.ld
         -Wl,--gc-sections,--relax
         -mcpu=cortex-m7
         -mfloat-abi=hard

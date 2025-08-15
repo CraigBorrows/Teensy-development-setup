@@ -15,10 +15,13 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /opt/teensy
 
-# Get your consolidated Teensy cores and libraries
-RUN git clone https://github.com/CraigBorrows/teensy_core_libs.git . && \
-    rm -rf .git
+# Get Teensy cores from Paul Stoffregen's official repo
+RUN git clone https://github.com/PaulStoffregen/cores.git cores && \
+    rm -rf cores/.git
 
+# Get Teensy libraries
+RUN git clone https://github.com/CraigBorrows/teensy_core_libs.git libraries && \
+    rm -rf libraries/.git
 
 # Set environment variables
 ENV TEENSY_ROOT=/opt/teensy
