@@ -25,6 +25,7 @@ add_executable(${PROJECT_NAME}
 add_teensy_cores(${PROJECT_NAME} teensy4)
 add_teensy_library(${PROJECT_NAME} SPI)
 add_teensy_library(${PROJECT_NAME} Wire)
+add_teensy_library(${PROJECT_NAME} SdFat)
 
 
 # Teensy 4.x definitions

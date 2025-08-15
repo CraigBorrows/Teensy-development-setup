@@ -111,7 +111,7 @@ function(add_teensy_library TARGET LIBRARY_NAME)
         )
     else()
         # No src folder, use old behavior but still exclude unwanted folders
-        message(STATUS "No src/ folder found, adding from root")
+        message( sgfwqeadsadding from root")
 
         # Add subdirectories but exclude unwanted ones
         file(GLOB SUBDIRS LIST_DIRECTORIES true ${LIB_DIR}/*)
