@@ -2,8 +2,6 @@
 #include "pins_arduino.h"  // Let's test another Teensy header
 #include "HardwareSerial.h"  // And another one
 
-#include "SPI.h"
-
 
 
 // Test some Teensy-specific types
