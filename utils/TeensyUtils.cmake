@@ -25,7 +25,7 @@ function(list_teensy_libraries)
 endfunction()
 
 function(list_project_libraries)
-    set(PROJECT_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
+    set(PROJECT_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
     if(EXISTS ${PROJECT_LIBS_DIR})
         file(GLOB PROJECT_LIBS RELATIVE ${PROJECT_LIBS_DIR} ${PROJECT_LIBS_DIR}/*)
@@ -67,7 +67,7 @@ endfunction()
 
 # Function to easily add Teensy libraries
 function(add_teensy_library TARGET LIBRARY_NAME)
-    set(PROJECT_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/${LIBRARY_NAME})
+    set(PROJECT_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/${LIBRARY_NAME})
     set(TEENSY_LIB_DIR ${TEENSY_ROOT}/libraries/${LIBRARY_NAME})
 
     # Check project libs directory first
@@ -81,11 +81,19 @@ function(add_teensy_library TARGET LIBRARY_NAME)
         message(FATAL_ERROR "Library '${LIBRARY_NAME}' not found in:\n  - ${PROJECT_LIB_DIR}\n  - ${TEENSY_LIB_DIR}")
     endif()
 
-    # Add library include directories
+    # Add main library include directories
     target_include_directories(${TARGET} PRIVATE
             ${LIB_DIR}
             ${LIB_DIR}/src
     )
+
+    # Find and add ALL subdirectories as include paths (for complex libraries like SdFat)
+    file(GLOB_RECURSE SUBDIRS LIST_DIRECTORIES true ${LIB_DIR}/*)
+    foreach(SUBDIR ${SUBDIRS})
+        if(IS_DIRECTORY ${SUBDIR})
+            target_include_directories(${TARGET} PRIVATE ${SUBDIR})
+        endif()
+    endforeach()
 
     # Find and add library source files
     file(GLOB_RECURSE LIB_SOURCES
