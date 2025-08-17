@@ -1,6 +1,7 @@
 import serial
 import serial.tools.list_ports
 import time
+import argparse
 
 def list_serial_ports():
     """List all available serial ports"""
@@ -44,19 +45,37 @@ def is_port_available(port):
     return port in available_ports
 
 def main():
-    # List available ports
-    available_ports = list_serial_ports()
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Serial Monitor with auto-reconnection')
+    parser.add_argument('-p', '--port', type=str, help='Serial port (e.g., COM3, /dev/ttyUSB0)')
+    parser.add_argument('-b', '--baudrate', type=int, default=115200, help='Baudrate (default: 9600)')
 
-    if not available_ports:
-        print("No serial ports available. Exiting...")
-        return
+    args = parser.parse_args()
 
-    # Select port
-    selected_port = available_ports[0]
+    # Check for available ports for 5 seconds if no port specified
+    if not args.port:
+        print("Checking for serial ports...")
+        start_time = time.time()
+        available_ports = []
+
+        while time.time() - start_time < 5:
+            available_ports = list_serial_ports()
+            if available_ports:
+                break
+            time.sleep(0.5)  # Check every 500ms
+
+        if not available_ports:
+            print("No serial ports available after 5 seconds. Exiting...")
+            return
+
+        selected_port = available_ports[0]
+    else:
+        selected_port = args.port
+
     print(f"\nAttempting to connect to {selected_port}...")
 
     # Connection parameters
-    baudrate = 9600
+    baudrate = args.baudrate
     reconnect_delay = 2  # seconds between reconnection attempts
     max_reconnect_attempts = 5  # max attempts before asking user
 

@@ -70,7 +70,7 @@ docker build -t teensy-dev .
 ## Configuration
 * Cmake application
 ```
-* Target: Teensy-project.elf
+* Target: Teensy-project
 * Executable: $ProjectFileDir$\utils\work_complete
 * Before Launch
   * Build
@@ -83,6 +83,18 @@ docker build -t teensy-dev .
 * Clion terminal
 * New PowerShell
 * pip install pyserial
-* python .\utils\serial_monitor.py 
- 
+* python .\utils\serial_monitor.py -p COM8 -b 115200
 
+or setup as config
+* Python Program
+```
+* Name: Serial_monitor
+* Script: $ProjectFileDir$/utils/serial_monitor.py
+* Script Parameters: -p COM8 -b 115200
+```
+* -p for port 
+* -b for baud rate
+* on Cmake application before Launch
+  * Run Python "serial_monitor"
+
+![img.png](utils/serialMonitor.png)

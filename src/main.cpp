@@ -1,17 +1,12 @@
 #include "Arduino.h"
-#include "pins_arduino.h"  // Let's test another Teensy header
-#include "HardwareSerial.h"  // And another one
-
-
 
 // Test some Teensy-specific types
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(LED_BUILTIN, OUTPUT);
 
   // Test if CLion recognizes these Teensy types/functions
-  digitalWriteFast(13, HIGH);  // Teensy-specific function
-  uint32_t freq = F_CPU;       // Teensy-specific macro
+  digitalWriteFast(LED_BUILTIN, HIGH);  // Teensy-specific function
 }
 
 void loop() {
